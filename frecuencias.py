@@ -10,7 +10,7 @@ Codigo:201110382
 |Modulo 0 para importar Librerias    |
 |____________________________________|
 '''
-import sys, string, os
+import sys, string, os,codecs
 '''
 '''
 def invertDictionary(orig_dict):
@@ -27,6 +27,10 @@ def contar_letras(s):
             d[letra] = d[letra] + 1
     return d
 
+
+
+
+
 '''
  ____________________________________
 |                                    |
@@ -35,6 +39,9 @@ def contar_letras(s):
 '''
 
 n_args = len(sys.argv)
+
+
+
 
 #Verificar entrada de datos
 
@@ -61,7 +68,6 @@ else:
 
 # Lectura del archivo
 infile = open(libro, 'r')
-
 #Cargar el texto por caracteres
 fulltext= infile.readlines()
 palabras="";
@@ -72,14 +78,19 @@ for i in range(len(fulltext)):
  for j in range(len(linea_instantanea)):
   palabras=""+linea_instantanea[len(linea_instantanea)-j-1]+palabras 
 
-listadecarateres="";
+
 totalletras=0;
 
-for i in palabras:
- if((palabras!='.') and (palabras!=' ') and (palabras!=',') and (palabras!=';')):
-  listadecaracteres=palabras
-  totalletras+=1
+palabras=palabras.replace(".","")
+palabras=palabras.replace(",","")
+palabras=palabras.replace(":","")
+palabras=palabras.replace(";","")
+palabras=palabras.replace(" ","")
+palabras=palabras.replace("\\n","")
+palabras=palabras.replace("\n","")
+palabras=palabras.replace("","")
 
+listadecaracteres=palabras
    
 '''
  ____________________________________
@@ -87,7 +98,6 @@ for i in palabras:
 |Modulo 2 Procesamiento de los datos |
 |____________________________________|
 '''
-
 #Defino el diccionario
 cuentaLetras = {}
 
@@ -106,25 +116,20 @@ f.write("\n")
 #llamo a contador letras
 h =contar_letras(listadecaracteres)
 
+totalletras=len(palabras);
 
 temp=0.0
 
 
-'''
- ____________________________________
-|                                    |
-|Modulo 3 Escritura de los datos     |
-|____________________________________|
-'''
+
 for w in sorted(h, key=h.get, reverse=True):
   temp=0.0
   temp=((h[w]+0.0)/totalletras)*100
-  print ' {} = {}%  '.format(w,temp) 
   f.write(' {} = {}% '.format(w,temp))
   temp=0.0
   f.write("\n")
  
-
+print  "Fin de programa con exito!\n"
 
 f.close()
 
